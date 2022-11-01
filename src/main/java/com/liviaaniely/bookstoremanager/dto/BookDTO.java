@@ -1,42 +1,39 @@
-package com.liviaaniely.bookstoremanager.entities;
+package com.liviaaniely.bookstoremanager.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity
-public class Book {
+import com.liviaaniely.bookstoremanager.entities.Author;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class BookDTO {
+
 	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@NotBlank
+	@Size(max = 250)
 	private String name;
 
-	@Column(nullable = false)
+	@NotNull
 	private Integer pages;
 
-	@Column(nullable = false)
+	@NotNull
 	private Integer chapters;
 
-	@Column(nullable = false)
+	@NotBlank
+	@Size(max = 100)
 	private String isbn;
 
-	@Column(name = "publisher_name", nullable = false, unique = true)
+	@NotBlank
+	@Size(max = 250)
 	private String publisherName;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
-	@JoinColumn(name = "author_id")
+	@Valid
+	@NotNull
 	private Author author;
 
-	public Book(String name, Integer pages, Integer chapters, String isbn, String publisherName,
+	public BookDTO(String name, Integer pages, Integer chapters, String isbn, String publisherName,
 			Author author) {
 		this.name = name;
 		this.pages = pages;
@@ -46,8 +43,9 @@ public class Book {
 		this.author = author;
 	}
 
-	public Book() {}
-	
+	public BookDTO() {
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -103,5 +101,4 @@ public class Book {
 	public void setAuthor(Author author) {
 		this.author = author;
 	}
-
 }
