@@ -23,4 +23,11 @@ public class BookService {
 		return "Book created with ID " + savedBook.getId();
 	}
 
+	public BookDTO findById(Long id) {
+		Book book = this.bookRepository.findById(id).get();
+		
+		BookDTO bookDTO = new BookDTO(book.getName(),book.getPages(),book.getChapters(),book.getIsbn(),book.getPublisherName(),book.getAuthor());
+		
+		return bookDTO;
+	}
 }
