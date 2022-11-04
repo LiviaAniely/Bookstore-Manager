@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.liviaaniely.bookstoremanager.dto.BookDTO;
+import com.liviaaniely.bookstoremanager.exceptions.BookNotFoundException;
 import com.liviaaniely.bookstoremanager.services.BookService;
 
 
@@ -27,7 +28,7 @@ public class BookController {
 	}
 	
 	@GetMapping("/{id}")
-	public BookDTO findById(@PathVariable Long id) {
+	public BookDTO findById(@PathVariable Long id) throws BookNotFoundException {
 		return this.bookService.findById(id);
 	}
 	

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.liviaaniely.bookstoremanager.dto.BookDTO;
 import com.liviaaniely.bookstoremanager.entities.Book;
+import com.liviaaniely.bookstoremanager.exceptions.BookNotFoundException;
 import com.liviaaniely.bookstoremanager.repositories.BookRepository;
 
 @Service
@@ -23,8 +24,8 @@ public class BookService {
 		return "Book created with ID " + savedBook.getId();
 	}
 
-	public BookDTO findById(Long id) {
-		Book book = this.bookRepository.findById(id).get();
+	public BookDTO findById(Long id) throws BookNotFoundException{
+		Book book = this.bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
 		
 		BookDTO bookDTO = new BookDTO(book.getName(),book.getPages(),book.getChapters(),book.getIsbn(),book.getPublisherName(),book.getAuthor());
 		
